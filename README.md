@@ -18,6 +18,10 @@ Ing. Juan E. Alvarenga - jealvarengar@unah.edu.hn
 - Git: [https://git-scm.com/downloads]
 - NodeJS [https://nodejs.org/en/]
 
+## Curso Web
+[https://web.dev/learn/html]
+
+
 ## Juego de FlexBox
 [https://codingfantasy.com/games/flexboxadventure]
 
