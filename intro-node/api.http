@@ -1,0 +1,16 @@
+GET http://localhost:3000/users
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "id": 2,
+    "name": "Juan Perez",
+    "email":"jperez@unah.edu.hn"
+}
+
+###  
+GET http://localhost:3000/fwjehfjb
+
+###

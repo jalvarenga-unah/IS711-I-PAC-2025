@@ -21,20 +21,55 @@ const server = createServer((request, response) => {
     // establecemos el tipo de contenido que se enviará en la respuesta
     response.writeHead(200, { 'Content-Type': 'application/json' })
 
-    if (request.url === '/') {
-        response.end('Hola mundo desde Node JS!!!')
-    } else if (request.url === '/users') {
-        response.end('El listado de usuarios')
-    } else {
-        response.end('Ruta no encontrada')
+    if (request.method === 'GET') {
+
+
+        if (request.url === '/') {
+            response.end('Hola mundo desde Node JS!!!')
+        } else if (request.url === '/users') {
+
+
+            response.end(JSON.stringify([{
+                id: 1,
+                name: 'John Doe',
+                email: 'jealvarengar@unah.edu.hn'
+            }, {
+                id: 2,
+                name: 'Juan Perez',
+                email: 'jperez@unah.edu.hn'
+            }]))
+
+
+        } else if (request.url === '/users/1') {
+
+            response.end(JSON.stringify([{
+                id: 1,
+                name: 'John Doe',
+                email: 'jealvarengar@unah.edu.hn'
+            }]))
+
+        } else {
+            response.end('Ruta no encontrada')
+        }
+    } else if (request.method === 'POST') {
+
+        if (request.url === '/users') {
+            response.end(JSON.stringify(request.body))
+        } else {
+            response.end('Ruta no encontrada')
+        }
     }
+
+
 
     //termina la solicitud y envía la respuesta al cliente
     // response.end('Hola Mundo, desde un servidor en NODE JS')
 })
 
+// variables de entorno
+
 // indicamos un puerto en el cual el servidor estará escuchando las solicitudes
-const puerto = 3000
+const puerto = process.env.PORT || 3000
 
 //vamos a iniciar a escuchar las solicitudes / peticiones al servidor
 server.listen(puerto, () => {
