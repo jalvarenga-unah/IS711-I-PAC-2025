@@ -5,8 +5,7 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "id": 2,
-    "name": "Juan Perez",
+    "name": "Juan Alvarenga",
     "email":"jperez@unah.edu.hn"
 }
 

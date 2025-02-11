@@ -54,7 +54,25 @@ const server = createServer((request, response) => {
     } else if (request.method === 'POST') {
 
         if (request.url === '/users') {
-            response.end(JSON.stringify(request.body))
+            let body = ''
+            //listener de la peticion
+            request.on('data', (chunk) => {
+                body += chunk.toString()
+            })
+
+            //listener de la finalizacion de la peticion
+            request.on('end', () => {
+                request.body = JSON.parse(body)
+                // proceso de valdiacion de datos
+                //creo el recurso en la BBDD
+
+                const id = new Date().getMilliseconds()
+
+                request.body.id = id
+
+                response.end(JSON.stringify(request.body))
+            })
+
         } else {
             response.end('Ruta no encontrada')
         }
