@@ -1,10 +1,38 @@
-import express from 'express' // "importando la instancia de express"
+import express, { json } from 'express' // "importando la instancia de express"
 import users from './local_db/users.json' with { type: 'json' }
 
 // createServer
 const app = express() // "creando la instancia de express"
 
 app.disable('x-powered-by') // "desactivando la cabecera x-powered-by"
+
+// Middlewares
+
+// me permite recibir datos en formato json en el body de la solicitud
+app.use(json())
+
+// se va a ejecutar en cada solicitud realizada al servidor web
+// app.use((req, res, next) => {
+//     // evaluar si la solicitud es segura
+//     // evaluar si quien hace la solicutd está autenticado
+//     // validar las sesiones
+
+//     // evita que continue con la siguiente función
+//     if (req.method !== 'POST') next()
+
+//     let body = ''
+
+//     req.on('data', (chunck) => {
+//         console.log('chunck', chunck)
+//         body += chunck.toString()
+//     })
+
+//     req.on('end', () => {
+//         req.body = JSON.parse(body)
+//         next()
+//     })
+
+// })
 
 // La creacion de las rutas de mi aplicación
 app.get('/', (req, res) => {
@@ -56,6 +84,27 @@ app.get('/users/:userId', (req, res) => {
 
     res.status(200).send(response)
 
+})
+
+app.post('/users', (req, res) => {
+
+    //obteniendo los datos del body
+
+    // validar que los datos estén completos o sean correctos
+
+    // insertar los datos en la BBDD
+
+    //notificar al usuario que se ha creado el recursos
+
+    res.json(req.body)
+
+})
+
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'Recurso no encontrado'
+    })
 })
 
 const port = process.env.PORT || 3000

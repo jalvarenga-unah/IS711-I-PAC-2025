@@ -1,4 +1,16 @@
-GET http://localhost:3000/
-
-### 
+### Lista de todos los usuarios
 GET http://localhost:3000/users
+
+### Buscar usuario por id
+GET http://localhost:3000/users/3
+
+### Crear un usuario
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "test Bauch",
+    "username": "Samantha",
+    "email": "Nathan@yesenia.net",
+    "phone": "1-463-123-4447"
+}
