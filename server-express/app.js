@@ -1,5 +1,6 @@
 import express, { json } from 'express' // "importando la instancia de express"
 import users from './local_db/users.json' with { type: 'json' }
+import { validateUser } from './schemas/user.js'
 
 // createServer
 const app = express() // "creando la instancia de express"
@@ -88,9 +89,13 @@ app.get('/users/:userId', (req, res) => {
 
 app.post('/users', (req, res) => {
 
-    //obteniendo los datos del body
+    //✅ obteniendo los datos del body
+    const data = req.body
 
     // validar que los datos estén completos o sean correctos
+    const result = validateUser(data)
+
+
 
     // insertar los datos en la BBDD
 
