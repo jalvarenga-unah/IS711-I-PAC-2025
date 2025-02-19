@@ -1,6 +1,7 @@
 import express, { json } from 'express' // "importando la instancia de express"
 import users from './local_db/users.json' with { type: 'json' }
 import { validateUser } from './schemas/user.js'
+import { randomUUID } from 'node:crypto'
 
 // createServer
 const app = express() // "creando la instancia de express"
@@ -95,13 +96,29 @@ app.post('/users', (req, res) => {
     // validar que los datos estén completos o sean correctos
     const result = validateUser(data)
 
-
+    if (!result.success) {
+        res.status(400).json({
+            success: false,
+            message: result.error.errors.map(error => ({
+                message: error.message,
+                path: error.path[0]
+            }))
+        })
+    }
 
     // insertar los datos en la BBDD
+    const id = randomUUID()
+
+    result.data.id = id
+
+    users.push(result.data)
 
     //notificar al usuario que se ha creado el recursos
 
-    res.json(req.body)
+    res.status(201).json({
+        success: true,
+        data: result.data
+    })
 
 })
 

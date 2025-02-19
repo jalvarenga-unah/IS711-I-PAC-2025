@@ -10,8 +10,8 @@ Content-Type: application/json
 
 {
     "name": "test Bauch",
-    "username": "sam1234",
-    "email": "s.@12341@unah.hn",
-    "phone": 99999999,
+    "username": "jalvarenga",
+    "email": "juan@unah.hn",
+    
     "role": "admin"
 }

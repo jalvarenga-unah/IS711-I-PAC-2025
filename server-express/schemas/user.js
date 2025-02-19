@@ -17,5 +17,5 @@ const userSchema = z.object({
 })
 
 export const validateUser = (data) => {
-    return userSchema.parse(data)
+    return userSchema.safeParse(data)
 }
