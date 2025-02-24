@@ -1,6 +1,6 @@
 import express, { json } from 'express' // "importando la instancia de express"
 import users from './local_db/users.json' with { type: 'json' }
-import { validateUser } from './schemas/user.js'
+import { validateUser, validateUserPartial } from './schemas/user.js'
 import { randomUUID } from 'node:crypto'
 
 // createServer
@@ -61,16 +61,16 @@ app.get('/users/:userId', (req, res) => {
 
     //es necesario convertir el id a un número, porque
     // el id en la base de datos es un número
-    const parsedId = Number(userId)
+    // const parsedId = Number(userId)
 
-    if (isNaN(parsedId)) {
-        res.status(400).json({
-            success: false,
-            message: 'El id debe ser un número'
-        })
-    }
+    // if (isNaN(parsedId)) {
+    //     res.status(400).json({
+    //         success: false,
+    //         message: 'El id debe ser un número'
+    //     })
+    // }
 
-    const user = users.find((user) => user.id === parsedId)
+    const user = users.find((user) => user.id === userId)
 
     if (!user) {
         res.status(204).json({
@@ -121,6 +121,77 @@ app.post('/users', (req, res) => {
     })
 
 })
+//user labs
+app.patch('/users/:userId', (req, res) => {
+    //1. obtener el id en la petción
+    const { userId } = req.params
+
+    //2. buscar si el recurso existe
+    const user = users.find((user) => user.id === userId)
+
+    //2.5 si no exiten el recurso, devolver un 404
+    if (!user) {
+        res.status(404).json({
+            success: false,
+            message: 'Usuario no existe'
+        })
+    }
+
+    //3. obtener los datos del body y validarlos
+
+    const data = req.body
+    const result = validateUserPartial(data)
+
+    if (!result.success) {
+        res.status(400).json({
+            success: false,
+            message: result.error.errors.map(error => ({
+                message: error.message,
+                path: error.path[0]
+            }))
+        })
+    }
+
+    //4. actualizar los datos del recurso (deberia ser la ejecuion del querie para actualizar)
+    const userIndex = users.findIndex((user) => user.id === userId)
+    users[userIndex] = { ...user, ...result.data }
+    //5. responder al usuario
+    res.json({
+        success: true,
+        data: users[userIndex]
+    })
+})
+
+app.delete('/users/:userId', (req, res) => {
+
+    const { userId } = req.params
+
+    const user = users.find((user) => user.id === userId)
+
+    if (!user) {
+        res.status(404).json({
+            success: false,
+            message: 'Usuario no existe'
+        })
+    }
+
+    const userIndex = users.findIndex((user) => user.id === userId)
+
+    if (userIndex === -1) {
+        res.status(404).json({
+            success: false,
+            message: 'Usuario no existe'
+        })
+    }
+
+    users.splice(userIndex, 1)
+
+    res.json({
+        success: true,
+        data: user
+    })
+})
+
 
 app.use((req, res) => {
     res.status(404).json({

@@ -1,3 +1,4 @@
+import { registerRuntimeCompiler } from 'vue'
 import { z } from 'zod'
 
 const userSchema = z.object({
@@ -12,10 +13,14 @@ const userSchema = z.object({
     "phone": z.number({
         required_error: "El teléfono es obligario",
         invalid_type_error: "El teléfono debe ser un número",
-    }).int().positive(),
+    }).int().positive().optional(),
     "role": z.enum(['admin', 'viewer'])
 })
 
 export const validateUser = (data) => {
     return userSchema.safeParse(data)
+}
+
+export const validateUserPartial = (data) => {
+    return userSchema.partial().safeParse(data)
 }

@@ -2,7 +2,7 @@
 GET http://localhost:3000/users
 
 ### Buscar usuario por id
-GET http://localhost:3000/users/3
+GET http://localhost:3000/users/a80499fd-e6bc-43c7-b2f0-264d9b7c94a1
 
 ### Crear un usuario
 POST http://localhost:3000/users
@@ -12,6 +12,18 @@ Content-Type: application/json
     "name": "test Bauch",
     "username": "jalvarenga",
     "email": "juan@unah.hn",
-    
+    "phone": 89898989,
     "role": "admin"
 }
+
+### Actualizar un usuario
+PATCH http://localhost:3000/users/a80499fd-e6bc-43c7-b2f0-264d9b7c94a
+Content-Type: application/json
+
+{ 
+    "role": "viewer"
+}
+
+
+### Eliminar un usuario
+DELETE http://localhost:3000/users/4
