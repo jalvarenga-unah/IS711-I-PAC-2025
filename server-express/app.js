@@ -1,6 +1,7 @@
 import express, { json } from 'express' // "importando la instancia de express"
 import userRoutes from './router/users.js'
 import authRoutes from './router/auth.js'
+import cors from 'cors'
 
 // createServer
 const app = express() // "creando la instancia de express"
@@ -11,6 +12,15 @@ app.disable('x-powered-by') // "desactivando la cabecera x-powered-by"
 
 // me permite recibir datos en formato json en el body de la solicitud
 app.use(json())
+app.use(cors({
+    // origin: 'http://localhost:53734'
+    origin: [
+        'http://localhost:53734',
+        'https://midominio.com',
+        'https://dev.midominio.com',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+})) // <- habilita todos los origenes de peticiones
 
 //Rutas
 app.use(authRoutes)

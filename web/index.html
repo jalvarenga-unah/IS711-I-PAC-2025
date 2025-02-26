@@ -41,23 +41,33 @@
         <tbody id="userTable"></tbody>
     </table>
     <script>
-        let users = [
-            {
-                "name": "test Bauch",
-                "username": "jalvarenga",
-                "email": "juan@unah.hn",
-                "phone": "89898989",
-                "role": "admin",
-                "id": "a80499fd-e6bc-43c7-b2f0-264d9b7c94a1"
-            }
-        ];
 
-        function renderTable() {
-            const table = document.getElementById("userTable");
-            table.innerHTML = "";
-            
-            users.forEach(user => {
-                const row = `<tr>
+        let users = []
+
+        async function renderTable() {
+            try {
+                const table = document.getElementById("userTable");
+                table.innerHTML = "";
+
+                //API de JS, que me permite consumir recursos de un servidor
+                const resultado = await fetch('http://localhost:3000/users') // <- una promesa
+                //  Response
+                if (!resultado.ok) {
+                    alert("Error al obtener los usuarios")
+                    return
+                }
+
+                const { success, data, message } = await resultado.json()
+
+                if (!success) {
+                    alert(message)
+                    return
+                }
+
+                users = data
+
+                users.forEach(user => {
+                    const row = `<tr>
                     <td>${user.name}</td>
                     <td>${user.username}</td>
                     <td>${user.email}</td>
@@ -68,8 +78,11 @@
                         <button onclick="deleteUser('${user.id}')">Eliminar</button>
                     </td>
                 </tr>`;
-                table.innerHTML += row;
-            });
+                    table.innerHTML += row;
+                });
+            } catch (error) {
+                console.error(error.message)
+            }
         }
 
         function saveUser(event) {
