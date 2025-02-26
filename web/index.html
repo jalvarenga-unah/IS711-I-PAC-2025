@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Usuarios</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" />
+
+</head>
+
+<body>
+    <h2>Administración de Usuarios</h2>
+    <section>
+        <form id="userForm">
+            <input type="hidden" id="userId">
+            <input type="text" id="name" placeholder="Nombre" required>
+            <input type="text" id="username" placeholder="Usuario" required>
+            <input type="email" id="email" placeholder="Correo" required>
+            <input type="text" id="phone" placeholder="Teléfono" required>
+            <select id="role" required>
+                <option value="admin">Admin</option>
+                <option value="viewer">Viewer</option>
+            </select>
+            <button type="submit">Guardar</button>
+        </form>
+    </section>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+    </table>
+    <script>
+        let users = [
+            {
+                "name": "test Bauch",
+                "username": "jalvarenga",
+                "email": "juan@unah.hn",
+                "phone": "89898989",
+                "role": "admin",
+                "id": "a80499fd-e6bc-43c7-b2f0-264d9b7c94a1"
+            }
+        ];
+
+        function renderTable() {
+            const table = document.getElementById("userTable");
+            table.innerHTML = "";
+            
+            users.forEach(user => {
+                const row = `<tr>
+                    <td>${user.name}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <button onclick="editUser('${user.id}')">Editar</button>
+                        <button onclick="deleteUser('${user.id}')">Eliminar</button>
+                    </td>
+                </tr>`;
+                table.innerHTML += row;
+            });
+        }
+
+        function saveUser(event) {
+            event.preventDefault();
+            const id = document.getElementById("userId").value || crypto.randomUUID();
+            const user = {
+                name: document.getElementById("name").value,
+                username: document.getElementById("username").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                role: document.getElementById("role").value,
+                id: id
+            };
+            const index = users.findIndex(u => u.id === id);
+            if (index >= 0) {
+                users[index] = user;
+            } else {
+                users.push(user);
+            }
+            document.getElementById("userForm").reset();
+            document.getElementById("userId").value = "";
+            renderTable();
+        }
+
+        function editUser(id) {
+            const user = users.find(u => u.id === id);
+            document.getElementById("userId").value = user.id;
+            document.getElementById("name").value = user.name;
+            document.getElementById("username").value = user.username;
+            document.getElementById("email").value = user.email;
+            document.getElementById("phone").value = user.phone;
+            document.getElementById("role").value = user.role;
+        }
+
+        function deleteUser(id) {
+            users = users.filter(u => u.id !== id);
+            renderTable();
+        }
+
+        document.getElementById("userForm").addEventListener("submit", saveUser);
+        renderTable();
+    </script>
+</body>
+
+</html>
