@@ -14,11 +14,12 @@ app.disable('x-powered-by') // "desactivando la cabecera x-powered-by"
 app.use(json())
 app.use(cors({
     // origin: 'http://localhost:53734'
-    origin: [
-        'http://localhost:53734',
-        'https://midominio.com',
-        'https://dev.midominio.com',
-    ],
+    // origin: [
+    //     'http://localhost:53734',
+    //     'https://midominio.com',
+    //     'https://dev.midominio.com',
+    // ],
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 })) // <- habilita todos los origenes de peticiones
 

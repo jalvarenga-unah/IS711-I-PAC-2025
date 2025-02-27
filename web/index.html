@@ -18,7 +18,7 @@
             <input type="text" id="name" placeholder="Nombre" required>
             <input type="text" id="username" placeholder="Usuario" required>
             <input type="email" id="email" placeholder="Correo" required>
-            <input type="text" id="phone" placeholder="Teléfono" required>
+            <input type="tel" id="phone" placeholder="Teléfono" required>
             <select id="role" required>
                 <option value="admin">Admin</option>
                 <option value="viewer">Viewer</option>
@@ -85,25 +85,54 @@
             }
         }
 
-        function saveUser(event) {
+        async function saveUser(event) {
             event.preventDefault();
-            const id = document.getElementById("userId").value || crypto.randomUUID();
+            // const id = document.getElementById("userId").value || crypto.randomUUID();
             const user = {
                 name: document.getElementById("name").value,
                 username: document.getElementById("username").value,
                 email: document.getElementById("email").value,
-                phone: document.getElementById("phone").value,
+                phone: parseInt(document.getElementById("phone").value),
                 role: document.getElementById("role").value,
-                id: id
             };
-            const index = users.findIndex(u => u.id === id);
-            if (index >= 0) {
-                users[index] = user;
-            } else {
-                users.push(user);
+
+            // enviar los datos al servidor
+            // console.log(user)
+            // por default realiza solicitudes GET
+
+            try {
+                const response = await fetch('http://localhost:3000/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                // console.log(response)
+
+                // if(!response.ok){
+                //     console.log(response.body)
+                //     alert("Error al guardar el usuario")
+                //     return
+                // }
+
+                const { success, message } = await response.json()
+
+                if (!success) {
+
+                    let mensaje = ''
+
+                    mensaje = message.map(({ path, message }) => `${path}: ${message}`).join('\n')
+
+                    alert(mensaje)
+                    return
+                }
+                alert('Usuario guardado con éxito')
+            } catch (error) {
+                console.log(error.message)
+                alert(error.message)
             }
-            document.getElementById("userForm").reset();
-            document.getElementById("userId").value = "";
+
             renderTable();
         }
 
@@ -115,13 +144,37 @@
             document.getElementById("email").value = user.email;
             document.getElementById("phone").value = user.phone;
             document.getElementById("role").value = user.role;
-        }
-
-        function deleteUser(id) {
-            users = users.filter(u => u.id !== id);
             renderTable();
         }
 
+        function deleteUser(id) {
+
+            const confirmacion = confirm('¿Estás seguro de eliminar el usuario?')
+
+            if (!confirmacion) {
+                return
+            }
+
+            fetch(`http://localhost:3000/users/${id}`, {
+                method: 'DELETE'
+            })
+                .then((response) => response.json())
+                .then(({ success, data, message }) => {
+
+                    if (!success) {
+                        alert(message)
+                        return
+                    }
+
+                    alert('Usuario eliminado con éxito')
+                    renderTable()
+
+                })
+
+            // renderTable();
+        }
+
+        //capturo el envio del formulario
         document.getElementById("userForm").addEventListener("submit", saveUser);
         renderTable();
     </script>
