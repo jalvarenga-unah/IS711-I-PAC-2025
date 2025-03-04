@@ -1,19 +1,8 @@
 import { Router } from "express";
+import { AuthController } from "../controllers/auth.js";
 
 const authRoutes = Router();
 
-
-authRoutes.post('/login', (req, res) => {
-    const { email, password } = req.body
-
-    res.json({
-        success: true,
-        data: {
-            email,
-            password
-        }
-    })
-
-})
+authRoutes.post('/login', AuthController.login)
 
 export default authRoutes;

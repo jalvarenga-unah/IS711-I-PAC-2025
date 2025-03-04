@@ -27,3 +27,13 @@ Content-Type: application/json
 
 ### Eliminar un usuario
 DELETE http://localhost:3000/users/4
+
+
+### API para iniciar sesión
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username": "jalvarenga",
+    "password": "4567"
+}

@@ -1,10 +1,12 @@
 [
-    {
-        "name": "test Bauch",
-        "username": "jalvarenga",
-        "email": "juan@unah.hn",
-        "phone": 89898989,
-        "role": "admin",
-        "id": "a80499fd-e6bc-43c7-b2f0-264d9b7c94a1"
-      }
+  {
+    "name": "test Bauch",
+    "username": "jalvarenga",
+    "email": "juan@unah.hn",
+    "phone": 89898989,
+    "role": "admin",
+    "password": "4567",
+    "must_change_password":0,
+    "id": "a80499fd-e6bc-43c7-b2f0-264d9b7c94a1"
+  }
 ]
