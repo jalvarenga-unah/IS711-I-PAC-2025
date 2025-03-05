@@ -1,5 +1,5 @@
-import e from 'express';
 import users from '../local_db/users.json' with { type: 'json' }
+import jsonwebtoken from 'jsonwebtoken'
 
 export class AuthController {
 
@@ -19,22 +19,35 @@ export class AuthController {
         if (password !== user.password) {
             res.status(404).json({
                 success: false,
-                message: 'Credenciales incorrectas!'
+                message: 'Credenciales incorrectas'
             });
         }
 
 
         if (user.must_change_password === 1) {
 
+            const token = jsonwebtoken.sign({
+                'username': user.username,
+            }, 'jd$63nf028ed23f5ok28345_65=24', {
+                expiresIn: '1h'
+            });
+
             res.status(200).json({
                 success: true,
                 data: {
                     //un token con info necesaria para el cambio de contraseña
                     must_change_password: true,
-                    token: "abc1234"
+                    token: token
                 }
             });
         }
+
+
+        const token = jsonwebtoken.sign({
+            'iat': new Date().getTime(),
+            'username': user.username,
+            'role': user.role
+        }, 'jd$63nf028ed23f5ok28345_65=24')
 
         res.status(200).json({
             success: true,
@@ -42,11 +55,16 @@ export class AuthController {
                 name: user.name,
                 email: user.email,
                 username: user.username,
-                token: "efg456"
+                token: token
                 //token con info para las consultas de los recursos
             }
         });
 
+    }
+
+    static setPassword(req, res) {
+
+        //TODO: 
     }
 
 
