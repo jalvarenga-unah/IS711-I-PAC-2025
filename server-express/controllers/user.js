@@ -2,6 +2,7 @@
 import users from '../local_db/users.json' with { type: 'json' }
 import { validateUser, validateUserPartial } from '../schemas/user.js'
 import { randomUUID } from 'node:crypto'
+import { sendResponse } from '../utils/response.js'
 
 export default class User {
 
@@ -12,7 +13,8 @@ export default class User {
             data: users
         }
 
-        res.json(response)
+        sendResponse(res, 200, users, 'Lista de usuarios')
+        // sendResponse({ res, status: 200, data: users, message: 'Lista de usuarios' })
     }
 
     static getById = (req, res) => {
@@ -20,10 +22,7 @@ export default class User {
         const user = users.find((user) => user.id === userId)
 
         if (!user) {
-            res.status(204).json({
-                success: true,
-                data: null
-            })
+            sendResponse(res, 204, null, 'No se encontró el usuario')
         }
 
         const response = {
@@ -31,7 +30,7 @@ export default class User {
             data: user ?? null
         }
 
-        res.status(200).send(response)
+        sendResponse(res, 200, response, 'Información del usuario')
     }
 
     static create = (req, res) => {
@@ -43,13 +42,11 @@ export default class User {
         const result = validateUser(data)
 
         if (!result.success) {
-            res.status(400).json({
-                success: false,
-                message: result.error.errors.map(error => ({
-                    message: error.message,
-                    path: error.path[0]
-                }))
-            })
+
+            sendResponse(res, 400, response, result.error.errors.map(error => ({
+                message: error.message,
+                path: error.path[0]
+            })))
         }
 
         // insertar los datos en la BBDD

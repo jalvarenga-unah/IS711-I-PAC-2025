@@ -2,9 +2,12 @@ import express, { json } from 'express' // "importando la instancia de express"
 import userRoutes from './router/users.js'
 import authRoutes from './router/auth.js'
 import cors from 'cors'
+import dotenv from 'dotenv'
 
 // createServer
 const app = express() // "creando la instancia de express"
+
+dotenv.config() // hacemos disponible las variables de entorno
 
 app.disable('x-powered-by') // "desactivando la cabecera x-powered-by"
 

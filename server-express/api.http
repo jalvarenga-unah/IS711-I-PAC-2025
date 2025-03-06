@@ -1,6 +1,6 @@
 ### Lista de todos los usuarios
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDExMzE5MDM4MjUsInVzZXJuYW1lIjoiamFsdmFyZW5nYSIsInJvbGUiOiJhZG1pbiJ9.sFk1dGY5pMFNC1r17578VBnfC8G6UD1qv3f8e5XDAUI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDEzMDQzNjU2OTIsInVzZXJuYW1lIjoiamFsdmFyZW5nYSIsInJvbGUiOiJhZG1pbiJ9.w6tFIIah6EGagvF-OtUC4UjvkAs5_hV30UxHOTRljEk
 ### Buscar usuario por id
 GET http://localhost:3000/users/a80499fd-e6bc-43c7-b2f0-264d9b7c94a1
 
@@ -13,7 +13,7 @@ Content-Type: application/json
     "username": "jalvarenga",
     "email": "juan@unah.hn",
     "phone": 89898989,
-    "role": "admin"
+    "role": "viewer"
 }
 
 ### Actualizar un usuario

@@ -17,7 +17,11 @@ export const isAuth = (req, res, next) => {
 
     //comprobar si es un token válido
     try {
-        jwt.verify(token, 'jd$63nf028ed23f5ok28345_65=24');
+        const { role } = jwt.verify(token, process.env.SECRET_KEY);
+
+        req.params.role = role
+
+        // console.log(role)
         next()
     } catch (err) {
         res.status(401).json(

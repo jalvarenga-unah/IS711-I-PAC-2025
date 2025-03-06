@@ -28,7 +28,7 @@ export class AuthController {
 
             const token = jsonwebtoken.sign({
                 'username': user.username,
-            }, 'jd$63nf028ed23f5ok28345_65=24', {
+            }, process.env.SECRET_KEY, {
                 expiresIn: '1h'
             });
 
@@ -47,7 +47,7 @@ export class AuthController {
             'iat': new Date().getTime(),
             'username': user.username,
             'role': user.role
-        }, 'jd$63nf028ed23f5ok28345_65=24')
+        }, process.env.SECRET_KEY)
 
         res.status(200).json({
             success: true,
