@@ -7,7 +7,7 @@ import isAdmin from '../middlewares/is_admin.js';
 const userRoutes = Router(); // pseudo-instancia de express
 
 userRoutes.get('/users', UserController.getAll)
-userRoutes.get('/users/:userId', isAuth, UserController.getById)
+userRoutes.get('/users/:userId', UserController.getById)
 
 userRoutes.post('/users', [isAuth, isAdmin], UserController.create)
 userRoutes.patch('/users/:userId', [isAuth, isAdmin], UserController.update)

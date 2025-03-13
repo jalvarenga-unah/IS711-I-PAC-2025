@@ -11,7 +11,10 @@ export default class User {
     static getAll = async (req, res) => {
 
         try {
-            const resultados = await UserModel.getAllUsers()
+
+            const { role } = req.query
+
+            const resultados = await UserModel.getAllUsers({ role })
 
             sendResponse(res, 200, resultados, 'Lista de usuarios')
         } catch (error) {
@@ -22,20 +25,27 @@ export default class User {
         // sendResponse({ res, status: 200, data: users, message: 'Lista de usuarios' })
     }
 
-    static getById = (req, res) => {
+    static getById = async (req, res) => {
         const { userId } = req.params
-        const user = users.find((user) => user.id === userId)
 
-        if (!user) {
-            sendResponse(res, 204, null, 'No se encontró el usuario')
+        try {
+            const user = await UserModel.getUserById(userId)
+
+            console.log(user)
+
+            if (!user) {
+                sendResponse(res, 204, null, 'No se encontró el usuario')
+            }
+
+            const response = {
+                success: true,
+                data: user ?? null
+            }
+
+            sendResponse(res, 200, response, 'Información del usuario')
+        } catch (error) {
+            sendResponse(res, 500, null, error)
         }
-
-        const response = {
-            success: true,
-            data: user ?? null
-        }
-
-        sendResponse(res, 200, response, 'Información del usuario')
     }
 
     static create = (req, res) => {

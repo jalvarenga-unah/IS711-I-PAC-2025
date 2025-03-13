@@ -1,8 +1,8 @@
 ### Lista de todos los usuarios
-GET http://localhost:3000/users
+GET http://localhost:3000/users?role=admin' or 1=1 
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDEzMDQzNjU2OTIsInVzZXJuYW1lIjoiamFsdmFyZW5nYSIsInJvbGUiOiJhZG1pbiJ9.w6tFIIah6EGagvF-OtUC4UjvkAs5_hV30UxHOTRljEk
 ### Buscar usuario por id
-GET http://localhost:3000/users/a80499fd-e6bc-43c7-b2f0-264d9b7c94a1
+GET http://localhost:3000/users/2e14c0fe-0061-11f0-8eb9-fe1363b97727
 
 ### Crear un usuario
 POST http://localhost:3000/users
