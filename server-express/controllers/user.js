@@ -3,17 +3,22 @@ import users from '../local_db/users.json' with { type: 'json' }
 import { validateUser, validateUserPartial } from '../schemas/user.js'
 import { randomUUID } from 'node:crypto'
 import { sendResponse } from '../utils/response.js'
+import * as UserModel from '../models/user.model.js'
 
 export default class User {
 
     //no requiere una instancia para ser llamado
-    static getAll = (req, res) => {
-        const response = {
-            success: true,
-            data: users
+    static getAll = async (req, res) => {
+
+        try {
+            const resultados = await UserModel.getAllUsers()
+
+            sendResponse(res, 200, resultados, 'Lista de usuarios')
+        } catch (error) {
+            sendResponse(res, 500, null, error)
         }
 
-        sendResponse(res, 200, users, 'Lista de usuarios')
+
         // sendResponse({ res, status: 200, data: users, message: 'Lista de usuarios' })
     }
 

@@ -1,12 +1,11 @@
-import { registerRuntimeCompiler } from 'vue'
 import { z } from 'zod'
 
 const userSchema = z.object({
     "name": z.string({
         required_error: "El nombre es obligatorio",
         invalid_type_error: "El nombre debe ser un texto",
-    }).min(3),
-    "username": z.string().min(6).max(10),
+    }).min(3).max(100),
+    "username": z.string().min(6).max(20),
     "email": z.string().email().endsWith('@unah.hn', {
         message: "Debe ser un estudiante de la UNAH"
     }),
