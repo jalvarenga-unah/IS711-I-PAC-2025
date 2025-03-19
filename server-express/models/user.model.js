@@ -28,3 +28,15 @@ export async function getUserById(id) {
     return results
 
 }
+
+export async function createUser(data) {
+
+    const pool = await db.getConnection()
+
+    const [results] = await pool.query(`INSERT INTO users (id, name, username, email, phone, role, 
+                                        password, must_change_password) 
+                                        VALUES ( UUID_TO_BIN(:id), :name, :username, :email, :phone, :role, NULL, 1  ) `, data)
+
+    return results
+
+}

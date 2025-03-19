@@ -1,7 +1,7 @@
 // se va a encargar de manejar las peticiones de los usuarios
 import users from '../local_db/users.json' with { type: 'json' }
 import { validateUser, validateUserPartial } from '../schemas/user.js'
-import { randomUUID } from 'node:crypto'
+import { randomUUID, randomBytes } from 'node:crypto'
 import { sendResponse } from '../utils/response.js'
 import * as UserModel from '../models/user.model.js'
 
@@ -67,9 +67,10 @@ export default class User {
         // insertar los datos en la BBDD
         const id = randomUUID()
 
-        result.data.id = id
+        result.data.id = id //TODO: revisar que pasó al guardar el registro
 
-        users.push(result.data)
+        console.log(result.data)
+        UserModel.createUser(result.data)
 
         //notificar al usuario que se ha creado el recursos
 
