@@ -1,10 +1,10 @@
 import { Producto } from './components/Producto.jsx'
-
-
+import './styles/app.css'
 // componente App -> Una etiqueta especial de HTML
 export const App = () => {
 
   const producto3 = {
+    title: "Producto 3",
     price: 900,
     description: "Descripción del prodcuto 3",
     image: "https://unavatar.io/github/jalvarenga-unah"
@@ -12,32 +12,26 @@ export const App = () => {
 
   return (
     <>
-      <h1>Mi primer componente</h1>
+      <h2>Mi primer componente</h2>
 
-      <Producto {...producto3}>
-        <h2>Producto 3</h2>
-      </Producto>
+      <section className='container'>
 
-      <Producto
-        price={300}
-        description="Descripción del prodcuto 1"
-        image="https://unavatar.io/github/jalvarenga-unah" >
+        <Producto {...producto3} />
 
-        <h2>Producto 1</h2>
-
-      </Producto>
-
-      <Producto
-
-        price={600}
-        description="Descripción del prodcuto 1"
-        image="https://unavatar.io/github/jalvarenga-unah">
+        <Producto
+          title="Producto 1"
+          price={300}
+          description="Descripción del prodcuto 1"
+          image="https://unavatar.io/github/jalvarenga-unah" />
 
 
-        <h2>Producto 2</h2>
+        <Producto
+          title="Producto 2"
+          price={600}
+          description="Descripción del prodcuto 1"
+          image="https://unavatar.io/github/jalvarenga-unah" />
+      </section>
 
-
-      </Producto>
 
 
     </>

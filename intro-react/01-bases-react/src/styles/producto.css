@@ -1,0 +1,24 @@
+.img-avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.title{
+    color: #1493ca;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.card {
+    max-width: 400px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+}
+
+.icon{
+    width: 50px;
+    height: 50px;
+}
